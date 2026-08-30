@@ -27,7 +27,16 @@ jobs:
       - name: Build firmware
         run: pio run -e ${{ inputs.pio_env }}
 
+      - name: List build outputs
+        run: |
+          echo "=== .pio/build ==="
+          ls -la .pio/build/${{ inputs.pio_env }}/ || true
+          echo "=== release ==="
+          ls -la release/ || true
+
       - uses: actions/upload-artifact@v4
         with:
           name: firmware-${{ inputs.pio_env }}
-          path: .pio/build/${{ inputs.pio_env }}/firmware.uf2
+          path: |
+            release/*
+            .pio/build/${{ inputs.pio_env }}/firmware.*
