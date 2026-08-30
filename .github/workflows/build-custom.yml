@@ -1,0 +1,39 @@
+name: Build Custom Firmware
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build'
+        required: true
+        default: 'ina226-2.7.26'
+        type: string
+      pio_env:
+        description: 'PlatformIO environment'
+        required: true
+        default: 'nrf52_promicro_diy_tcxo'
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+          submodules: recursive
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Build firmware
+        run: pio run -e ${{ inputs.pio_env }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ inputs.pio_env }}
+          path: .pio/build/${{ inputs.pio_env }}/firmware.uf2
