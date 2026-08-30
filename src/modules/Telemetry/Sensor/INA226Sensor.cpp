@@ -32,7 +32,7 @@ void INA226Sensor::begin(TwoWire *wire, uint8_t addr)
     _addr = addr;
     ina226 = INA226(_addr, _wire);
     _wire->begin();
-    ina226.setMaxCurrentShunt(6.0, 0.0133); // калибровочное для  шунта 
+    ina226.setMaxCurrentShunt(6.05, 0.0133); // калибровочное для  шунта 
 }
 
 bool INA226Sensor::getMetrics(meshtastic_Telemetry *measurement)
