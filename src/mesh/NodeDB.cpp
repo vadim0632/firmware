@@ -341,8 +341,11 @@ NodeDB::NodeDB()
           moduleConfig.telemetry.environment_update_interval, min_default_telemetry_interval_secs);
       moduleConfig.telemetry.air_quality_interval = Default::getConfiguredOrMinimumValue(
           moduleConfig.telemetry.air_quality_interval, min_default_telemetry_interval_secs);
-      moduleConfig.telemetry.power_update_interval = Default::getConfiguredOrMinimumValue(
-          moduleConfig.telemetry.power_update_interval, min_default_telemetry_interval_secs);
+       
+//      moduleConfig.telemetry.power_update_interval = Default::getConfiguredOrMinimumValue(
+//          moduleConfig.telemetry.power_update_interval, min_default_telemetry_interval_secs);
+             moduleConfig.telemetry.power_update_interval = 5 * 60;                                  // ← жестко 5 минут для INA226
+       
      moduleConfig.telemetry.health_update_interval = Default::getConfiguredOrMinimumValue(
          moduleConfig.telemetry.health_update_interval, min_default_telemetry_interval_secs);
   }
@@ -360,8 +363,13 @@ NodeDB::NodeDB()
         LOG_DEBUG("Coerce position broadcasts to role-aware minimum and smart broadcast min of 5 minutes on defaults");
         config.position.position_broadcast_secs =
             Default::getConfiguredOrMinimumValue(config.position.position_broadcast_secs, min_default_broadcast_interval_secs);
-        config.position.broadcast_smart_minimum_interval_secs = Default::getConfiguredOrMinimumValue(
-            config.position.broadcast_smart_minimum_interval_secs, min_default_broadcast_smart_minimum_interval_secs);
+        
+        
+//        config.position.broadcast_smart_minimum_interval_secs = Default::getConfiguredOrMinimumValue(
+//            config.position.broadcast_smart_minimum_interval_secs, min_default_broadcast_smart_minimum_interval_secs);
+        // Для  автомобимльной ноды
+        config.position.broadcast_smart_minimum_interval_secs = 60;
+        
     }
     // FIXME: UINT32_MAX intervals overflows Apple clients until they are fully patched
     if (config.device.node_info_broadcast_secs > MAX_INTERVAL)
