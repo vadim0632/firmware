@@ -365,10 +365,9 @@ NodeDB::NodeDB()
             Default::getConfiguredOrMinimumValue(config.position.position_broadcast_secs, min_default_broadcast_interval_secs);
         
         
-//        config.position.broadcast_smart_minimum_interval_secs = Default::getConfiguredOrMinimumValue(
-//            config.position.broadcast_smart_minimum_interval_secs, min_default_broadcast_smart_minimum_interval_secs);
-        // Для  автомобимльной ноды
-        config.position.broadcast_smart_minimum_interval_secs = 60;
+        config.position.broadcast_smart_minimum_interval_secs = Default::getConfiguredOrMinimumValue(
+            config.position.broadcast_smart_minimum_interval_secs, min_default_broadcast_smart_minimum_interval_secs);
+
         
     }
     // FIXME: UINT32_MAX intervals overflows Apple clients until they are fully patched
